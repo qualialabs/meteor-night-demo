@@ -1,5 +1,5 @@
 Router.route('/', {
-  name: 'bubbles',
+  name: 'home',
 });
 
 Router.route('/reval/fiddle', {

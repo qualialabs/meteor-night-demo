@@ -1,9 +1,10 @@
 <template name="bubbles">
-  <div class="ui centered grid" style="max-width: 800px">
-    <div class="ten wide column">
+  <div class="ui centered padded grid">
+    <div class="ten wide right aligned column">
       <canvas width="{{ $tpl.width }}" height="{{ $tpl.height }}" style="border: 1px solid #d3d3d3; padding: 0px;"></canvas>
     </div>
-    <div class="four wide column">
+    <div class="one wide column"></div>
+    <div class="four wide left aligned column">
       <div class="ui field">
         <nameInput class="ui input">
           <input type="text" placeholder="Your Name" value="{{ $tpl.getUser.name }}">
@@ -20,5 +21,6 @@
         {{/each}}
       </div>
     </div>
+    <div class="two wide column"></div>
   </div>
 </template>

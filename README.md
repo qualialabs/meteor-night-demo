@@ -1,1 +1,2 @@
-Just clone the repo and run `meteor`!
+To run the demo, execute the following command:
+`git clone https://github.com/qualialabs/meteor-night-demo && cd meteor-night-demo && meteor npm install && meteor`
