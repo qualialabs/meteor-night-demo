@@ -1,6 +1,19 @@
 gameArea {
   height: calc(100vh - 20px);
 }
+
+/* Make full height in reval */
+revalFiddleView {
+  display: flex;
+  flex-direction: column;
+}
+revalFiddleView > layout {
+  flex-grow: 1;
+  margin-top: -2em !important;
+  margin-bottom: 0em !important;
+}
+
+
 gameArea canvas {
   flex-grow: 0 !important;
   align-self: center;
@@ -8,5 +21,6 @@ gameArea canvas {
 }
 
 scoreboard {
+  padding-top: 1em !important;
   padding-right: 2em !important;
 }
