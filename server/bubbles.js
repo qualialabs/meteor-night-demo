@@ -2,7 +2,7 @@ let Balls = Mongo.Collection.get('balls') || new Mongo.Collection('balls'),
     Users = Mongo.Collection.get('users') || new Mongo.Collection('users'),
     width = 450,
     height = 350,
-    maxBalls = 10
+    maxBalls = 5
 ;
 
 let gameLoop = () => {
@@ -13,13 +13,33 @@ let gameLoop = () => {
 };
 
 let createRandomBall = () => {
-  Balls.insert({
-    x: Math.random() * 100 + (width/2 - 50),
-    y: Math.random() * 100 + (height/2 - 50),
-    vx: Math.random() * 2 - 1,
-    vy: Math.random() * 2 - 1,
-    r: Math.random() * 20 + 30 ,
-    color: [ Math.random() * 255, Math.random() * 255, Math.random() * 255 ],
+  let ball,
+      attempts = 0,
+      maxAttempts = 1000
+  ;
+
+  while (attempts < maxAttempts) {
+    attempts += 1;
+    ball = {
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: Math.random() * 2 - 1,
+      vy: Math.random() * 2 - 1,
+      r: Math.random() * 20 + 30 ,
+      color: [ Math.random() * 255, Math.random() * 255, Math.random() * 255 ],
+    };
+    if (spaceFree(ball)) {
+      break;
+    }
+  }
+
+  Balls.insert(ball);
+};
+
+let spaceFree = ball => {
+  return Balls.find().fetch().every(otherBall => {
+    let distance = Math.sqrt((otherBall.x - ball.x)**2 + (otherBall.y - ball.y)**2);
+    return distance > ball.r + otherBall.r + 200;
   });
 };
 
