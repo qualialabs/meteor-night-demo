@@ -1,1 +1,1 @@
-# meteor-night-demo
+Just clone the repo and run `meteor`!
