@@ -1,15 +1,18 @@
 <template name="bubbles">
-  <div class="ui centered padded grid">
-    <div class="ten wide right aligned column">
-      <canvas width="{{ $tpl.width }}" height="{{ $tpl.height }}" style="border: 1px solid #d3d3d3; padding: 0px;"></canvas>
-    </div>
-    <div class="one wide column"></div>
-    <div class="four wide left aligned column">
-      <div class="ui field">
-        <nameInput class="ui input">
-          <input type="text" placeholder="Your Name" value="{{ $tpl.getUser.name }}">
-        </nameInput>
+  <div class="ui equal width divided grid">
+    <gameArea class="stretched column">
+      <canvas></canvas>
+    </gameArea>
+    <scoreboard class="four wide column">
+      <div class="ui secondary segment form">
+        <div class="field">
+          <label>Your Name</label>
+          <nameInput class="ui input">
+            <input type="text" placeholder="Your Name" value="{{ $tpl.getUser.name }}">
+          </nameInput>
+        </div>
       </div>
+      <h4 class="ui dividing header">Scoreboard</h4>
       <div class="ui ordered list">
         {{#each user in $tpl.getUsers}}
           <div class="item">
@@ -20,7 +23,6 @@
           </div>
         {{/each}}
       </div>
-    </div>
-    <div class="two wide column"></div>
+    </scoreboard>
   </div>
 </template>

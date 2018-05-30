@@ -6,25 +6,39 @@ Template.bubbles.onCreated(function(){
 
   _.extend(tpl, {
 
-    width: 450,
-    height: 350,
+    width: 1800,
+    height: 1400,
+
+    scaleFactor: undefined,
 
     initialize() {
       tpl.userID = tpl.configureUser();
     },
 
     rendered() {
-      tpl.canvas = tpl.$('canvas')[0];
-      tpl.ctx = tpl.canvas.getContext('2d');
+      tpl.getScale();
+      $(window).on('resize', function() {
+        requestAnimationFrame(tpl.getScale);
+      });
       tpl.draw();
+    },
+
+    getScale() {
+      tpl.scaleFactor = Math.min(tpl.$('gameArea').width() / tpl.width, tpl.$('gameArea').height() / tpl.height);
+      tpl.canvas = tpl.$('canvas')[0];
+      tpl.canvas.width = tpl.width * tpl.scaleFactor;
+      tpl.canvas.height = tpl.height * tpl.scaleFactor;
+      tpl.ctx = tpl.canvas.getContext('2d');
     },
 
     draw() {
       tpl.autorun(comp => {
-        tpl.ctx.clearRect(0, 0, tpl.width, tpl.height);
-        Balls.find().forEach(ball => {
-          tpl.drawBall(ball);
-        })
+        tpl.ctx.clearRect(0, 0, tpl.width * tpl.scaleFactor, tpl.height * tpl.scaleFactor);
+        tpl.getBalls().forEach(ball => {
+          requestAnimationFrame(() => {
+            tpl.drawBall(ball)
+          });
+        });
       });
     },
 
@@ -75,13 +89,24 @@ Template.bubbles.onCreated(function(){
     },
 
     findBalls(x, y) {
-      return Balls.find().fetch().filter(ball => {
-        return x < ball.x + ball.r 
-          && x > ball.x - ball.r
-          && y < ball.y + ball.r
-          && y > ball.y - ball.r
-        ;
+      return tpl.getBalls()
+        .filter(ball => {
+          return x < ball.x + ball.r
+            && x > ball.x - ball.r
+            && y < ball.y + ball.r
+            && y > ball.y - ball.r
+          ;
+        });
+    },
+
+    getBalls() {
+      let balls = Balls.find().fetch();
+      balls.forEach(ball => {
+        ball.r = ball.r * tpl.scaleFactor;
+        ball.x = ball.x * tpl.scaleFactor;
+        ball.y = ball.y * tpl.scaleFactor;
       });
+      return balls;
     },
 
     scoreBall(ball) {

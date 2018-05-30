@@ -1,0 +1,12 @@
+gameArea {
+  height: calc(100vh - 20px);
+}
+gameArea canvas {
+  flex-grow: 0 !important;
+  align-self: center;
+  justify-content: center;
+}
+
+scoreboard {
+  padding-right: 2em !important;
+}
