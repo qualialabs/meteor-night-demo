@@ -48,8 +48,7 @@ let updateBalls = () => {
     let x = ball.x + ball.vx * 5,
         y = ball.y + ball.vy * 5,
         vx = ball.vx,
-        vy = ball.vy,
-        r = ball.r * 1
+        vy = ball.vy
     ;
 
     if ((x + ball.r > width && vx > 0) || (x - ball.r < 0 && vx < 0)) {
@@ -61,7 +60,7 @@ let updateBalls = () => {
     }
 
     Balls.update(ball._id, {
-      $set: { x, y, vx, vy, r },
+      $set: { x, y, vx, vy },
     });
   });
 };
